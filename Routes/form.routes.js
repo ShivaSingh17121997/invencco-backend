@@ -26,7 +26,7 @@ router.post('/post', async (req, res) => {
 
         res.status(201).json(savedUser); // Return the saved user as response
     } catch (error) {
-        res.status(500).json({ error: error.message }); 
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -74,5 +74,20 @@ router.put('/edit/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+// single product page
+
+router.get('/get/:id', async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ _id: req.params.id }); // Corrected usage of findOne
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 
 module.exports = { router };
